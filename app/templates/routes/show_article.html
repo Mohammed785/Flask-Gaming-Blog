@@ -7,7 +7,7 @@
             <div class="col-lg-6">
                 <div class="details-hero-text">
                     {%for category in article.category%}
-                    <div class="label"><span>{{category.name}}</span></div>
+                    <div class="label"><a href="{{url_for('routes.show_category',category_id=category.id)}}"><span>{{category.name}}</span></a></div>
                     {%endfor%}
                     <h3>{{article.title}}</h3>
                     <ul>
