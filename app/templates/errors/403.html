@@ -1,0 +1,18 @@
+{%extends 'index.html'%}
+{%block title%}403{%endblock%}
+{%block content%}
+    <section class="section-404">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-404">
+                        <h1>403</h1>
+                        <h3>You are forbidden to access this page</h3>
+                        <p>Can't Let You in Go back to the homepage</p>
+                        <a href="{{url_for('routes.home')}}" class="primary-btn">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{%endblock%}

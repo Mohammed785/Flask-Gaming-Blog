@@ -1,0 +1,32 @@
+{%extends 'index.html'%}
+{%block title%}Reset Request{%endblock%}
+{%block content%}
+<div class="signup-section">
+    <div class="signup-close"><i class="fa fa-close"></i></div>
+    <div class="signup-text">
+        <div class="container">
+            <div class="signup-title">
+                <h2>Reset Request</h2>
+                <p>Find My Email</p>
+            </div>
+            <form method="POST" class="signup-form">
+                {{form.hidden_tag()}}
+                <div class="sf-input-list">
+                    {%if form.email.errors%}
+                    {{form.email(class='input-value is-invalid',placeholder='Email')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.email.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.email(class='input-value',placeholder='Email')}}
+                    {%endif%}
+                </div>
+                {{form.submit()}}
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,68 @@
+{%extends 'index.html'%}
+{%block title%}Articles{%endblock%}
+{%block content%}
+    <section class="breadcrumb-section set-bg spad" data-setbg="{{url_for('static',filename='article/breadcrumb-bg.jpg')}}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb-text">
+                        {%if selector%}
+                        <h3><span>{{selector.name}}</span></h3>
+                        {%else%}
+                        <h3><span>Articles</span></h3>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="categories-grid-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="p-0">
+                    <div class="row">
+                        {%for article in articles.items%}
+                        <div class="col-lg-6">
+                            <div class="cg-item">
+                                <div class="cg-pic set-bg" data-setbg="{{url_for('static',filename='article/'+article.article_pic)}}">
+                                {%for category in article.category[:1]%}
+                                    <div class="label" >
+                                        <span>{{category.name}}</span>
+                                    </div>
+                                {%endfor%}
+                                </div>
+                                <div class="cg-text">
+                                    <h5><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a></h5>
+                                    <ul>
+                                        <li>by <span>{{article.author.username}}</span></li>
+                                        <li><i class="fa fa-clock-o"></i> {{article.timestamp|dateformater}}</li>
+                                        <li><i class="fa fa-comment-o"></i> {{article.comments.count()}}</li>
+                                    </ul>
+                                    <p>{{article.body[:50]}}...</p>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                    <div class="pagination-item">
+                        {%for page_num in articles.iter_pages(left_edge=1,right_edge=1,left_current=2,right_current=2)%}
+                        {%if page_num%}
+                        {%if type=='category'%}
+                            <a href="{{url_for('routes.show_category',page=page_num,category_id=selector.id)}}"><span>{{page_num}}</span></a>
+                        {%elif type=='tag'%}
+                            <a href="{{url_for('routes.show_tag',page=page_num,tag_id=selector.id)}}"><span>{{page_num}}</span></a>
+                        {%elif type=='reviews'%}
+                            <a href="{{url_for('routes.show_reviews',page=page_num)}}"><span>{{page_num}}</span></a>
+                        {%else%}
+                            <a href="{{url_for('routes.show_articles',page=page_num)}}"><span>{{page_num}}</span></a>
+                        {%endif%}
+                        {%else%}
+                        <a href="#"><span>Next</span></a>
+                        {%endif%}
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{%endblock%}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Amin Template">
+    <meta name="keywords" content="Amin, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{%block title%}{%endblock%}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/font-awesome.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/elegant-icons.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/owl.carousel.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/barfiller.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/magnific-popup.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/slicknav.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Menu Begin -->
+    <div class="humberger-menu-overlay"></div>
+    <div class="humberger-menu-wrapper">
+        <div class="hw-logo">
+            <a href="#"><img src="{{url_for('static',filename='logo.png')}}" alt=""></a>
+        </div>
+        <div class="hw-menu mobile-menu">
+            <ul>
+                <li><a href="{{url_for('routes.home')}}">Home</a></li>
+                <li><a href="{{url_for('routes.show_articles')}}">Articles</a></li>
+                <li><a href="{{url_for('routes.show_reviews')}}">Reviews</a></li>
+                <li><a href="#">Platforms <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="{{url_for('routes.show_category',category_id=1)}}">Windows</a></li>
+                        <li><a href="{{url_for('routes.show_category',category_id=2)}}">Playstation</a></li>
+                        <li><a href="{{url_for('routes.show_category',category_id=3)}}">Xbox</a></li>
+                    </ul>
+                </li>
+                {%if current_user.is_authenticated%}
+                <li><a href="{{url_for('routes.account')}}">Account</a></li>
+                {%endif%}
+            </ul>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="hw-copyright">
+            Copyright © 2021 No Inc. No rights reserved
+        </div>
+        <div class="hw-social">
+            <a href="https://github.com/Mohammed785"><i class="fa fa-github"></i></a>
+        </div>
+    </div>
+    <!-- Humberger Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <div class="ht-options">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8">
+                        <div class="ht-widget">
+                            <ul>
+                                <li><i class="fa fa-clock-o"></i> {{current_date|dateformater}}</li>
+                                {%if not current_user.is_authenticated%}
+                                <li class=""><a href="{{url_for('auth.login')}}"><i class="fa fa-sign-in"></a></i> Login
+                                <li class=""><a href="{{url_for('auth.register')}}"><i class="fa fa-user-plus"></a></i> Register
+                                {%else%}
+                                <li class="signup-switch signup-open"><a href="{{url_for('auth.logout')}}"><i class="fa fa-sign-out"></a></i> Logout</li>
+                                <li class="signup-switch signup-open"><a href="{{url_for('routes.account')}}"><img src="{{url_for('static',filename='user/'+current_user.profile_pic)}}"class="rounded-circle z-depth-0"height="35"/></a></li>
+                                <li class="signup-switch signup-open"><a href="{{url_for('routes.show_notifications')}}" ><i class="fa fa-bell" aria-hidden="true">                                <span id="notification-badge"
+                              class="{% if notification_count == 0 %}hide{% endif %} badge badge-danger badge-notification"
+                              data-href="{{notifications_count}}">{{ notification_count }}</span>
+                                {%endif%}</i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ht-social">
+                            <a href="https://github.com/Mohammed785"><i class="fa fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                       <a href="{{url_for('routes.home')}}"><img src="{{url_for('static',filename='logo.png')}}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-options">
+            <div class="container">
+                <div class="humberger-menu humberger-open">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="nav-search search-switch">
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="nav-menu">
+                    <ul>
+                        <li class="active"><a href="{{url_for('routes.home')}}"><span>Home</span></a></li>
+                        <li class="mega-menu"><a href="{{url_for('routes.show_tag',tag_id=1)}}"><span>Games</span></a></li>
+                        <li><a href="{{url_for('routes.show_tag',tag_id=2)}}"><span>Editors Choice</span></a></li>
+                        <li><a href="{{url_for('routes.show_reviews')}}"><span>Reviews</span></a></li>
+                        <li><a href="{{url_for('routes.show_category',category_id=5)}}"><span>Discussions</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div style="background-color: #0d0d0d;">
+                {%with messages=get_flashed_messages(with_categories=true)%}
+                {%if messages%}
+                    {%for category,msg in messages%}
+                        <div class="alert alert-{{category}}  alert-dismissible fade show" role="alert">
+                            {{ msg }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                        </div>
+                    {%endfor%}
+                {%endif%}
+            {%endwith%}
+    </div>
+    <!-- Header End -->
+{%block content%}{%endblock%}
+ 
+    <!-- Footer Section End -->
+    <!-- Search model Begin -->
+    {%if g.search_form%}
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form" method="GET" action="{{url_for('routes.search')}}">
+                {{g.search_form.q(placeholder='Search here...',id='search-input')}}
+            </form>
+        </div>
+    </div>
+    {%endif%}
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="{{url_for('static',filename='js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/circle-progress.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jquery.barfiller.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jquery.slicknav.js')}}"></script>
+    <script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/main.js')}}"></script>
+</body>
+
+</html>

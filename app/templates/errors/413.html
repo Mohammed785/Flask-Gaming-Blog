@@ -1,0 +1,18 @@
+{%extends 'index.html'%}
+{%block title%}413{%endblock%}
+{%block content%}
+    <section class="section-404">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-404">
+                        <h1>413</h1>
+                        <h3>Request Entity Too Large<br> Go back to the homepage</h3>
+                        <p>Go back to the homepage</p>
+                        <a href="{{url_for('routes.home')}}" class="primary-btn">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{%endblock%}

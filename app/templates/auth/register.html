@@ -1,0 +1,76 @@
+{%extends 'index.html'%}
+{%block title%}Register{%endblock%}
+{%block content%}
+<div class="signup-section">
+    <div class="signup-text">
+        <div class="container">
+            <div class="signup-title">
+                <h2>Register</h2>
+                <p>Join Us Now</p>
+            </div>
+            <form method="POST" class="signup-form">
+                {{form.hidden_tag()}}
+                <div class="sf-input-list">
+                    {%if form.username.errors%}
+                    {{form.username(class='input-value is-invalid',placeholder='Username')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.username.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.username(class='input-value',placeholder='Username')}}
+                    {%endif%}
+
+                    {%if form.email.errors%}
+                    {{form.email(class='input-value is-invalid',placeholder='Email')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.email.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.email(class='input-value',placeholder='Email')}}
+                    {%endif%}
+                    
+                    {%if form.password.errors%}
+                    {{form.password(class='input-value is-invalid',placeholder='Password')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.password.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.password(class='input-value',placeholder='Password')}}
+                    {%endif%}
+                    
+                    {%if form.confirm_password.errors%}
+                    {{form.confirm_password(class='input-value is-invalid',placeholder='Confirm Password')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.confirm_password.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.confirm_password(class='input-value',placeholder='Confirm Password')}}
+                    {%endif%}
+
+                </div>
+                <div class="radio-check">
+                    <label for="rc-agree">I agree with the term & conditions
+                        <input type="checkbox" id="rc-agree">
+                        <span class="checkbox"></span>
+                    </label>
+                </div>
+                {{form.submit()}}
+            </form>
+                      <a class="btn btn-lg btn-facebook btn-block text-uppercase" href="{{url_for('auth.oauth_authorize',provider_name='facebook')}}"><i class="fa fa-facebook mr-2"></i>
+    Sign up with Facebook</a>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,350 @@
+{%extends 'index.html'%}
+
+{%block title%}Home{%endblock%}
+
+{%block content%}
+
+   <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row" style="text-align:center;">
+                <h1 style="color:#c20000">Welcome To The Ultimate  Gaming Experience</h1>
+            </div>
+        </div>
+        <div class="hero-slider owl-carousel">
+            <div class="hs-item set-bg" style="width: auto;" data-setbg="{{url_for('static',filename='hero.jpg')}}"></div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Latest Preview Section Begin -->
+    <section class="latest-preview-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h5>Latest Articles</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="lp-slider owl-carousel">
+                    {%for article in latest.items%}
+                    <div class="col-lg-3">
+                        <div class="lp-item">
+                            <div class="lp-pic set-bg" data-setbg="{{url_for('static',filename='article/'+article.article_pic)}}">
+                                <div class="review-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress" data-cpid="id" data-cpvalue="75"
+                                                data-cpcolor="#c20000"></span>
+                                            {%if article.is_review%}
+                                            <div class="review-point">{{article.review_score}}</div>
+                                            {%endif%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lp-text">
+                                <h6><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:50]}}...</a></h6>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i> {{article.timestamp|dateformater}}</li>
+                                    <li><i class="fa fa-comment-o"></i>{{article.comments.count()}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest Preview Section End -->
+
+    <!-- Update News Section Begin -->
+    <section class="update-news-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-title">
+                        <h5><span>News & update</span></h5>
+                    </div>
+                    <div class="tab-elem">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Platform</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Hardware</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews</a>
+                            </li>
+                        </ul><!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
+                                <div class="row">
+                                    <div class="un-slider owl-carousel">
+                                        <div class="col-lg-12">
+                                            <div class="un-big-item set-bg" data-setbg="{{url_for('static',filename='article/'+platform.items[0].article_pic)}}">
+                                                <div class="ub-text">
+                                                    <div class="label"><span>Platform</span></div>
+                                                    <h5><a href="{{url_for('routes.show_article',article_id=platform.items[0].id)}}">{{platform.items[0].title}}</a></h5>
+                                                    <ul>
+                                                        <li>by <span>{{platform.items[0].author.username}}</span></li>
+                                                        <li><i class="fa fa-clock-o"></i> {{platform.items[0].timestamp|dateformater}}</li>
+                                                        <li><i class="fa fa-comment-o"></i>{{platform.items[0].comments.count()}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                {%for article in platform.items[1:]%}
+                                                <div class="col-md-4">
+                                                    <div class="un-item">
+                                                        <div class="un_pic set-bg" data-setbg="{{url_for('static',filename='articles/'+article.article_pic)}}">
+                                                            <div class="label"><span>Platform</span></div>
+                                                        </div>
+                                                        <div class="un_text">
+                                                            <h6><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a></h6>
+                                                            <ul>
+                                                                <li><i class="fa fa-clock-o"></i>{{article.timestamp|dateformater}}</li>
+                                                                <li><i class="fa fa-comment-o"></i>{{article.comments.count()}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-2" role="tabpanel">
+                                <div class="row">
+                                    <div class="un-slider owl-carousel">
+                                        <div class="col-lg-12">
+                                            <div class="un-big-item set-bg" data-setbg="{{url_for('static',filename='article/+hardware.items[0].article_pic')}}">
+                                                <div class="ub-text">
+                                                    <div class="label"><span>Hardware</span></div>
+                                                    <h5><a href="{{url_for('routes.show_article',article_id=hardware.items[0].id)}}">{{hardware.items[0].title}}</a></h5>
+                                                    <ul>
+                                                        <li>by <span>{{hardware.items[0].author.username}}</span></li>
+                                                        <li><i class="fa fa-clock-o"></i> {{hardware.items[0].timestamp|dateformater}}</li>
+                                                        <li><i class="fa fa-comment-o"></i>{{hardware.items[0].comments.count()}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                {%for article in hardware.items[1:]%}
+                                                <div class="col-md-4">
+                                                    <div class="un-item">
+                                                        <div class="un_pic set-bg" data-setbg="{{url_for('static',filename='articles/'+article.article_pic)}}">
+                                                            <div class="label"><span>Hardware</span></div>
+                                                        </div>
+                                                        <div class="un_text">
+                                                            <h6><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a></h6>
+                                                            <ul>
+                                                                <li><i class="fa fa-clock-o"></i>{{article.timestamp|dateformater}}</li>
+                                                                <li><i class="fa fa-comment-o"></i>{{article.comments.count()}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-3" role="tabpanel">
+                                <div class="row">
+                                    <div class="un-slider owl-carousel">
+                                        <div class="col-lg-12">
+                                            <div class="un-big-item set-bg" data-setbg="{{url_for('static',filename='article/+reviews.items[0].article_pic')}}">
+                                                <div class="ub-text">
+                                                    <div class="label"><span>Reviews</span></div>
+                                                    <h5><a href="{{url_for('routes.show_article',article_id=reviews.items[0].id)}}">{{reviews.items[0].title}}</a></h5>
+                                                    <ul>
+                                                        <li>by <span>{{reviews.items[0].author.username}}</span></li>
+                                                        <li><i class="fa fa-clock-o"></i> {{reviews.items[0].timestamp|dateformater}}</li>
+                                                        <li><i class="fa fa-comment-o"></i>{{reviews.items[0].comments.count()}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                {%for article in reviews.items[1:]%}
+                                                <div class="col-md-4">
+                                                    <div class="un-item">
+                                                        <div class="un_pic set-bg" data-setbg="{{url_for('static',filename='articles/'+article.article_pic)}}">
+                                                            <div class="label"><span>Reviews</span></div>
+                                                        </div>
+                                                        <div class="un_text">
+                                                            <h6><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a></h6>
+                                                            <ul>
+                                                                <li><i class="fa fa-clock-o"></i>{{article.timestamp|dateformater}}</li>
+                                                                <li><i class="fa fa-comment-o"></i>{{article.comments.count()}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar-option">
+                        <div class="social-media">
+                            <div class="section-title">
+                                <h5>Social media</h5>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="sm-icon"><i class="fa fa-facebook"></i></div>
+                                    <span>Facebook</span>
+                                </li>
+                                <li>
+                                    <div class="sm-icon"><i class="fa fa-twitter"></i></div>
+                                    <span>Twitter</span>
+                                </li>
+                                <li>
+                                    <div class="sm-icon"><i class="fa fa-youtube-play"></i></div>
+                                    <span>Youtube</span>
+                                </li>
+                                <li>
+                                    <div class="sm-icon"><i class="fa fa-instagram"></i></div>
+                                    <span>Instagram</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hardware-guides">
+                            <div class="section-title">
+                                <h5>Tech</h5>
+                            </div>
+                            {%for article in tech.items%}
+                            <div class="trending-item">
+                                <div class="ti-pic">
+                                    <img src="{{url_for('static',filename='articles/'+article.article_pic)}}" alt="">
+                                </div>
+                                <div class="ti-text">
+                                    <h6><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a>
+                                    </h6>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i>{{article.timestamp|dateformater}}</li>
+                                        <li><i class="fa fa-comment-o"></i>{{article.comments.count()}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Update News Section End -->
+
+    <!-- Videos Guide Section Begin -->
+    <section class="video-guide-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h5>Dissection</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-elem">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tabs-5" role="tabpanel">
+                        <div class="row">
+                            <div class="vg-slider owl-carousel">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        {%for article in dissection.items%}
+                                        <div class="col-md-4">
+                                            <div class="vg-item set-bg" data-setbg="{{url_for('static',filename='article/'+article.article_pic)}}">
+                                                <div class="vg-text">
+                                                    <a href="{{url_for('routes.show_article',article_id=article.id)}}"><h6>{{article.title}}</h6></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {%endfor%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Videos Guide Section End -->
+
+    <!-- Instagram Post Section Begin -->
+    <section class="instagram-post-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="">
+                    <div class="section-title">
+                        <h5>Tech</h5>
+                    </div>
+                    {%for article in tech.items%}
+                    <div class="ip-item">
+                        <div class="ip-pic">
+                            <img src="{{url_for('static',filename='article/'+article.article_pic)}}" alt="">
+                        </div>
+                        <div class="ip-text">
+                            <div class="label"><span>{{article.category.name}}</span></div>
+                            <h5><a href="{{url_for('routes.show_article',article_id=article.id)}}">{{article.title[:20]}}...</a></h5>
+                            <ul>
+                                <li>by <span>{{article.author.username}}</span></li>
+                                <li><i class="fa fa-clock-o"></i> Aug 01, 2019</li>
+                                <li><i class="fa fa-comment-o"></i> 20</li>
+                            </ul>
+                            <p>{{article.body[:60]}}...</p>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Instagram Post Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-about">
+                        <div class="fa-logo">
+                            <a href="#"><img src="img/f-logo.png" alt=""></a>
+                        </div>
+                        <div class="fa-social">
+                            <a href="https://github.com/Mohammed785"><i class="fa fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="tags-cloud">
+                        <div class="section-title">
+                            <h5>Tags Cloud</h5>
+                        </div>
+                        <div class="tag-list">
+                            {%for tag in tags.items%}
+                            <a href="{{url_for('routes.show_tag',tag_id=tag.id)}}"><span>{{tag.name}}</span></a>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{%endblock%}

@@ -1,0 +1,30 @@
+{%extends 'index.html'%}
+
+{%block title%}Home{%endblock%}
+{%block content%}
+<div class="signup-section">
+    <div class="signup-text">
+        <div class="container">
+            <div class="signup-title">
+                <h2>Comment</h2>
+            </div>
+            <form method="POST" class="signup-form">
+                {{form.hidden_tag()}}
+                <div class="sf-input-list">
+                    {%if form.body.errors%}
+                    {{form.body(class='input-value is-invalid',placeholder='Comment')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.body.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.body(class='input-value',placeholder='Comment')}}
+                    {%endif%}
+                {{form.submit()}}
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

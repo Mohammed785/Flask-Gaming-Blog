@@ -1,0 +1,87 @@
+{%extends 'index.html'%}
+{%block title%}Article{%endblock%}
+{%block content%}
+<div class="signup-section">
+    <div class="signup-text">
+        <div class="container">
+            <div class="signup-title">
+                <h2>Article</h2>
+            </div>
+            <form method="POST" class="signup-form" enctype="multipart/form-data">
+                {{form.hidden_tag()}}
+                <div class="sf-input-list">
+                    {%if form.title.errors%}
+                    {{form.title(class='input-value is-invalid',placeholder='Title')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.title.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.title(class='input-value',placeholder='Title')}}
+                    {%endif%}
+
+                    {%if form.body.errors%}
+                    {{form.body(class='input-value is-invalid',placeholder='Body')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.body.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.body(class='input-value',placeholder='Body')}}
+                    {%endif%}
+                    
+                    {%if form.review.errors%}
+                    {{form.review(class='input-value is-invalid',placeholder='Review')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.review.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.review(class='input-value',placeholder='Review')}}
+                    {%endif%}
+
+                    {%if form.categorys.errors%}
+                    {{form.categorys(class='input-value is-invalid',placeholder='Categorys')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.categorys.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.categorys(class='input-value',placeholder='Categorys')}}
+                    {%endif%}
+
+                    {%if form.tags.errors%}
+                    {{form.tags(class='input-value is-invalid',placeholder='Tags')}}
+
+                    <div class="invalid-feedback">
+                        {%for error in form.tags.errors%}
+                        <span>{{error}}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    {{form.tags(class='input-value',placeholder='Tags')}}
+                    {%endif%}
+
+
+                    {{ form.pic(class="form-control-file") }}
+                    {% if form.pic.errors %}
+                        {% for error in form.pic.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+                {{form.submit()}}
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

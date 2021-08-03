@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<section class='dark-theme'>
+    <div class="page-header">
+        <h1>Notifications</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+                <a class="nav-item nav-link {% if request.args.get('filter') != 'unread' %}active{% endif %}"
+                   href="{{ url_for('routes.show_notifications', filter='all') }}">
+                    All
+                </a>
+                <a class="nav-item nav-link {% if request.args.get('filter') == 'unread' %}active{% endif %}"
+                   href="{{ url_for('routes.show_notifications', filter='unread') }}">
+                    Unread
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card w-100">
+                <div class="card-header">{{ notification_count }} unread notifications
+                    <div class="float-right">
+                        <a class="inline" href="{{ url_for('routes.read_all_notification') }}">
+                                <span class="fa fa-check" aria-hidden="true"></span> Read all
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if notifications %}
+                        <ul class="list-group">
+                            {% for notification in notifications %}
+                                <li class="list-group-item">
+                                    {{ notification.body |safe}}
+                                    <span class="float-right">
+                                        {{notification.timestamp|dateformater }}
+                                        {% if notification.is_read == False %}
+                                            <a class="inline"href="{{ url_for('routes.read_notification', notification_id=notification.id) }}">
+                                                    <span class="fa fa-check" aria-hidden="true"></span>
+                                            </a>
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="tip text-center">
+                            <h6>No notifications.</h6>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,152 @@
+{%extends 'index.html'%}
+{%block title%}{{article.title}}{%endblock%}
+{%block content%}
+<section class="details-hero-section set-bg" data-setbg="{{url_for('static',filename='article/'+ article.article_pic)}}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="details-hero-text">
+                    {%for category in article.category%}
+                    <div class="label"><span>{{category.name}}</span></div>
+                    {%endfor%}
+                    <h3>{{article.title}}</h3>
+                    <ul>
+                        <li>by <span>{{article.author.username}}</span></li>
+                        <li><i class="fa fa-clock-o"></i>{{article.timestamp|dateformater}}</li>
+                        <li><i class="fa fa-comment-o"></i> {{article.comments.count()}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Details Hero Section End -->
+
+<!-- Details Post Section Begin -->
+<section class="details-post-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 p-0">
+                <div class="details-text">
+                    <div class="dt-last-desc">
+                        <p>{{article.body}}</p>
+                    </div>
+                    {%if article.review_score%}
+                    <div class="dt-overall-rating">
+                        <div class="or-heading">
+                            <div class="or-item">
+                                <div class="or-loader">
+                                    <div class="loader-circle-wrap">
+                                        <div class="loader-circle">
+                                            <span class="circle-progress-2" data-cpid="id-5"
+                                                data-cpvalue="{{article.review_score * 10}}"
+                                                data-cpcolor="#c20000"></span>
+                                            <div class="review-point">
+                                                <div>{{article.review_score}}</div>
+                                                <span>AVERAGE SCORE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                    <div class="dt-tags">
+                        {%for tag in article.tags%}
+                        <a href="{{url_for('routes.show_tag',tag_id=tag.id)}}"><span>{{tag.name}}</span></a>
+                        {%endfor%}
+                    </div>
+                    <div class="dt-share">
+                        <div class="ds-title">Share</div>
+                        <div class="ds-links">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-google-plus"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        </div>
+                    </div>
+                    <div class="dt-author">
+                        <div class="da-pic">
+                            <img src="{{url_for('static',filename='user/'+article.author.profile_pic)}}" alt="">
+                        </div>
+                        <div class="da-text">
+                            <h5>{{article.author.username}}</h5>
+                            <p>{{article.author.about}}</p>
+                            <div class="da-links">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dt-comment">
+                        <h4>{{article.comments.count()}} comment</h4>
+                        {%if article.comments%}
+                        {%for comment in article.comments%}
+                        <div class="dc-item">
+                            <div class="dc-pic">
+                                <img src="{{url_for('static',filename='user/'+comment.author.profile_pic)}}" alt="">
+                            </div>
+                            <div class="dc-text">
+                                <h5>{{comment.author.username}}</h5>
+                                <span class="c-date">{{comment.timestamp|dateformater}}</span>
+                                <p>{{comment.body}}</p>
+                                <div class = 'actions_buttons'>
+                                <a href="{{url_for('routes.reply_comment',comment_id=comment.id)}}"
+                                    class="reply-btn"><span>Reply</span></a>
+                                {%if current_user==comment.author or current_user.is_admin%}
+                                <a href="{{url_for('routes.edit_comment',comment_id=comment.id)}}"
+                                    class="reply-btn" style="background-color: rgb(87, 87, 209);"><span>Edit</span></a>
+                                <a href="{{url_for('routes.delete_comment',comment_id=comment.id)}}"
+                                    class="reply-btn" style="background-color: red;"><span>Delete</span></a>
+                                {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                        {%for reply in comment.replies%}
+                        <div class="dc-item reply-item">
+                            <div class="dc-pic">
+                                <img src="{{url_for('static',filename='user/'+reply.author.profile_pic)}}" alt="">
+                            </div>
+                            <div class="dc-text">
+                                <h5>{{reply.author.username}}</h5>
+                                <span class="c-date">{{reply.timestamp|dateformater}}</span>
+                                <p>{{reply.body}}</p>
+                            </div>
+                        </div>
+                        {%endfor%}
+                        {%endfor%}
+                        {%endif%}
+                    </div>
+                    {%if current_user.is_authenticated%}
+                    <div class="dt-leave-comment">
+                        <h4>Leave a comment</h4>
+                        <form action="#" method="POST">
+                            {{form.hidden_tag()}}
+                            <div class="input-list">
+                                {%if form.body.errors%}
+                                {{form.body(class='input-value is-invalid',placeholder='Comment')}}
+
+                                <div class="invalid-feedback">
+                                {%for error in form.body.errors%}
+                                    <span>{{error}}</span>
+                                {%endfor%}
+                                </div>
+                                {%else%}
+                                {{form.body(class='input-value',placeholder='Comment')}}
+                                {%endif%}
+                            </div>
+                            {{form.submit()}}
+                        </form>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}
