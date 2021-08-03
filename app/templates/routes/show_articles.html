@@ -27,7 +27,7 @@
                                 <div class="cg-pic set-bg" data-setbg="{{url_for('static',filename='article/'+article.article_pic)}}">
                                 {%for category in article.category[:1]%}
                                     <div class="label" >
-                                        <span>{{category.name}}</span>
+                                    <a href="{{url_for('routes.show_category',category_id=category.id)}}"><span>{{category.name}}</span></a>
                                     </div>
                                 {%endfor%}
                                 </div>
